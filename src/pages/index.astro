@@ -1,0 +1,55 @@
+---
+import Layout from '../layouts/Layout.astro'
+import HeaderStatic from '../components/HeaderStatic.astro'
+import HeroStatic from '../components/HeroStatic.astro'
+import TrustBar from '../components/TrustBar'
+import Steps from '../components/Steps'
+import ProblemPicker from '../components/ProblemPicker'
+import VideoTestimonials from '../components/VideoTestimonials'
+import Pricing from '../components/Pricing'
+import Doctors from '../components/Doctors'
+import ScientificBase from '../components/ScientificBase'
+import WrittenTestimonials from '../components/WrittenTestimonials'
+import FAQ from '../components/FAQ'
+import Partners from '../components/Partners'
+import Footer from '../components/Footer'
+---
+
+<Layout title="weedmed | Cannabis Medicinal Online">
+  <div class="min-h-screen bg-white">
+    <!-- Above the fold - Static HTML para LCP rápido -->
+    <HeaderStatic currentPath="/" />
+    <HeroStatic />
+    <TrustBar client:load />
+
+    <!-- Como funciona -->
+    <Steps client:visible />
+
+    <!-- Para quem é -->
+    <ProblemPicker client:visible />
+
+    <!-- Depoimentos em vídeo -->
+    <VideoTestimonials client:visible />
+
+    <!-- Preços -->
+    <Pricing client:visible />
+
+    <!-- Especialistas -->
+    <Doctors client:visible />
+
+    <!-- Base científica -->
+    <ScientificBase client:visible />
+
+    <!-- Depoimentos escritos -->
+    <WrittenTestimonials client:visible />
+
+    <!-- FAQ -->
+    <FAQ client:visible />
+
+    <!-- Parceiros -->
+    <Partners client:visible />
+
+    <!-- Footer -->
+    <Footer />
+  </div>
+</Layout>

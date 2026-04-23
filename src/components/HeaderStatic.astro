@@ -1,0 +1,169 @@
+---
+interface Props {
+  currentPath?: string
+}
+
+const { currentPath = '/' } = Astro.props
+---
+
+<header class="w-full">
+  <!-- Promotional Banner -->
+  <div class="py-2 text-center px-4" style="background-color: #00B383;">
+    <button
+      type="button"
+      class="open-chat text-xs sm:text-sm font-semibold text-white hover:underline"
+      style="font-family: 'Inter', system-ui, sans-serif;"
+      data-cta="banner"
+    >
+      <span class="sm:hidden">Consulta médica online · R$50 →</span>
+      <span class="hidden sm:inline">Consulta médica online a partir de R$50 · Resultado em até 24h →</span>
+    </button>
+  </div>
+
+  <!-- Navigation Bar -->
+  <nav class="bg-white border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+      <div class="flex items-center justify-between h-20">
+        <!-- Logo -->
+        <a href="/" class="flex-shrink-0">
+          <img
+            src="/logo-wm-light.svg"
+            alt="weedmed"
+            class="h-8 w-auto"
+            width="180"
+            height="32"
+            loading="eager"
+          />
+        </a>
+
+        <!-- Desktop Navigation -->
+        <div class="hidden lg:flex items-center gap-10">
+          <a
+            href="/#como-funciona"
+            class="text-sm font-medium text-gray-600 hover:text-[#2D1B69] transition-colors"
+            style="font-family: 'Inter', system-ui, sans-serif;"
+          >
+            Como funciona
+          </a>
+          <a
+            href="/#depoimentos"
+            class="text-sm font-medium text-gray-600 hover:text-[#2D1B69] transition-colors"
+            style="font-family: 'Inter', system-ui, sans-serif;"
+          >
+            Depoimentos
+          </a>
+          <a
+            href="/#precos"
+            class="text-sm font-medium text-gray-600 hover:text-[#2D1B69] transition-colors"
+            style="font-family: 'Inter', system-ui, sans-serif;"
+          >
+            Preços
+          </a>
+        </div>
+
+        <!-- Right Side Actions -->
+        <div class="flex items-center gap-3">
+          <button
+            type="button"
+            class="open-chat hidden lg:inline-flex items-center justify-center px-5 py-2.5 text-sm font-medium text-[#2D1B69] border border-[#2D1B69] rounded-full hover:bg-[#EDE9F8] transition-all duration-200"
+            style="font-family: 'Inter', system-ui, sans-serif;"
+            data-cta="header_receita"
+          >
+            Já tenho receita
+          </button>
+          <button
+            type="button"
+            class="open-chat hidden lg:inline-flex items-center justify-center px-6 py-2.5 text-sm font-semibold text-white rounded-full shadow-md hover:shadow-lg hover:opacity-90 transition-all duration-200 header-cta"
+            style="font-family: 'Inter', system-ui, sans-serif;"
+            data-cta="header_desktop"
+          >
+            Iniciar tratamento
+          </button>
+
+          <!-- Mobile Menu Button -->
+          <button
+            type="button"
+            class="lg:hidden inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-gray-900 hover:bg-gray-100 mobile-menu-btn"
+            aria-label="Abrir menu"
+          >
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="lg:hidden bg-white border-t border-gray-100 shadow-xl hidden">
+      <div class="px-6 py-5 space-y-3 flex flex-col">
+        <a href="/#como-funciona" class="text-sm font-medium text-gray-600 hover:text-[#2D1B69] transition-colors py-1">Como funciona</a>
+        <a href="/#depoimentos" class="text-sm font-medium text-gray-600 hover:text-[#2D1B69] transition-colors py-1">Depoimentos</a>
+        <a href="/#precos" class="text-sm font-medium text-gray-600 hover:text-[#2D1B69] transition-colors py-1">Preços</a>
+        <div class="pt-2 flex flex-col gap-2">
+          <button
+            type="button"
+            class="open-chat inline-flex items-center justify-center px-6 py-3 text-sm font-medium text-[#2D1B69] border border-[#2D1B69] rounded-full transition-all duration-200"
+            data-cta="header_receita_mobile"
+          >
+            Já tenho receita
+          </button>
+          <button
+            type="button"
+            class="open-chat inline-flex items-center justify-center px-6 py-3 text-sm font-semibold text-white rounded-full shadow-md header-cta"
+            data-cta="header_mobile"
+          >
+            Iniciar tratamento
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<style>
+  .header-cta {
+    background-color: #2D1B69;
+  }
+  .header-cta:hover {
+    background-color: #1a1040;
+  }
+</style>
+
+<script>
+  const menuBtn = document.querySelector('.mobile-menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  if (menuBtn && mobileMenu) {
+    menuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+    mobileMenu.querySelectorAll('a, button').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+      });
+    });
+  }
+
+  document.querySelectorAll('[data-cta]').forEach(el => {
+    el.addEventListener('click', () => {
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: 'cta_click',
+        cta_location: el.getAttribute('data-cta'),
+      });
+    });
+  });
+
+  document.querySelectorAll('a[href^="/#"]').forEach(anchor => {
+    anchor.addEventListener('click', (e) => {
+      const href = anchor.getAttribute('href');
+      if (href && window.location.pathname === '/') {
+        e.preventDefault();
+        const targetId = href.replace('/#', '');
+        const target = document.getElementById(targetId);
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
+</script>
